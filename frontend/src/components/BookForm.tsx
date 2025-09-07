@@ -67,37 +67,64 @@ export default function BookForm({ editingBook }: BookFormProps) {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <h2>{editingBook ? "Edit Book" : "Add Book"}</h2>
-      {!editingBook && (
-        <>
+    <form onSubmit={handleSubmit} className="bg-white p-6 rounded-lg shadow">
+      <h2 className="text-lg font-medium mb-4">
+        {editingBook ? "Edit Book" : "Add Book"}
+      </h2>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {!editingBook && (
+          <>
+            <div className="flex flex-col">
+              <label className="text-sm text-gray-600 mb-1">Title</label>
+              <input
+                name="title"
+                value={form.title}
+                placeholder="The Pragmatic Programmer"
+                onChange={handleChange}
+                className="h-10 rounded-md border border-gray-300 px-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
+            <div className="flex flex-col">
+              <label className="text-sm text-gray-600 mb-1">Author</label>
+              <input
+                name="author"
+                placeholder="Andy Hunt"
+                value={form.author}
+                onChange={handleChange}
+                className="h-10 rounded-md border border-gray-300 px-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
+          </>
+        )}
+        <div className="flex flex-col">
+          <label className="text-sm text-gray-600 mb-1">Price</label>
           <input
-            name="title"
-            value={form.title}
-            placeholder="Title"
+            name="price"
+            placeholder="29.99"
+            value={form.price}
             onChange={handleChange}
+            className="h-10 rounded-md border border-gray-300 px-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
+        </div>
+        <div className="flex flex-col">
+          <label className="text-sm text-gray-600 mb-1">Stock</label>
           <input
-            name="author"
-            placeholder="Author"
-            value={form.author}
+            name="stock"
+            placeholder="12"
+            value={form.stock}
             onChange={handleChange}
+            className="h-10 rounded-md border border-gray-300 px-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
-        </>
-      )}
-      <input
-        name="price"
-        placeholder="Price"
-        value={form.price}
-        onChange={handleChange}
-      />
-      <input
-        name="stock"
-        placeholder="Stock"
-        value={form.stock}
-        onChange={handleChange}
-      />
-      <button type="submit">{editingBook ? "Update" : "Add"}</button>
+        </div>
+      </div>
+      <div className="mt-6">
+        <button
+          type="submit"
+          className="inline-flex items-center justify-center rounded-md bg-blue-600 px-4 py-2 text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        >
+          {editingBook ? "Update" : "Add"}
+        </button>
+      </div>
     </form>
   );
 }

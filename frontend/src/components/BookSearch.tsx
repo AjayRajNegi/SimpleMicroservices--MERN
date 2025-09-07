@@ -19,14 +19,22 @@ export default function BookSearch({ setResults }: BookSearchProps) {
   };
 
   return (
-    <div>
-      <h2>Search by Author</h2>
-      <input
-        value={author}
-        placeholder="Author name"
-        onChange={(e) => setAuthor(e.target.value)}
-      />
-      <button onClick={handleSearch}>Search</button>
+    <div className="bg-white p-6 rounded-lg shadow">
+      <h2 className="text-lg font-medium mb-4">Search by Author</h2>
+      <div className="flex items-center gap-2">
+        <input
+          value={author}
+          placeholder="Author name"
+          onChange={(e) => setAuthor(e.target.value)}
+          className="h-10 flex-1 rounded-md border border-gray-300 px-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
+        <button
+          onClick={handleSearch}
+          className="inline-flex items-center justify-center rounded-md bg-blue-600 px-4 py-2 text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        >
+          Search
+        </button>
+      </div>
     </div>
   );
 }

@@ -24,7 +24,7 @@ export default function EditBookPage() {
   if (!book) return <p>Loading...</p>;
 
   return (
-    <div>
+    <div className="max-w-3xl mx-auto">
       <BookForm editingBook={book} />
     </div>
   );

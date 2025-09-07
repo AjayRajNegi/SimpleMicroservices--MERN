@@ -24,17 +24,36 @@ export default function BookList({ onEdit, onDelete }: BookListProps) {
   };
 
   return (
-    <div>
-      <h2>Book List</h2>
-      <ul>
+    <div className="space-y-4">
+      <h2 className="text-lg font-medium">Book List</h2>
+      <ul className="space-y-3">
         {books.map((book) => (
-          <li key={book.id}>
-            <b>
-              {book.title} by {book.author} — ${book.price} ({book.stock} in
-              stock)
-            </b>
-            <button onClick={() => onEdit(book)}>Edit</button>
-            <button onClick={() => onDelete(book.id)}>Delete</button>
+          <li
+            key={book.id}
+            className="bg-white rounded-lg shadow p-4 flex items-center justify-between"
+          >
+            <div className="text-sm">
+              <b>
+                {book.title} by {book.author}
+              </b>
+              <div className="text-gray-600">
+                ${book.price} · {book.stock} in stock
+              </div>
+            </div>
+            <div className="flex gap-2">
+              <button
+                onClick={() => onEdit(book)}
+                className="px-3 py-1.5 rounded-md text-sm bg-amber-500 text-white hover:bg-amber-600"
+              >
+                Edit
+              </button>
+              <button
+                onClick={() => onDelete(book.id)}
+                className="px-3 py-1.5 rounded-md text-sm bg-red-600 text-white hover:bg-red-700"
+              >
+                Delete
+              </button>
+            </div>
           </li>
         ))}
       </ul>
