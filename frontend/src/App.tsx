@@ -1,35 +1,55 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from "react";
+import BookForm from "./components/BookForm";
+import BookSearch from "./components/BookSearch";
+import BookList from "./components/BookList";
+import type { Book } from "./types";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [editingBook, setEditingBook] = useState<Book | null>(null);
+  const [results, setResults] = useState<Book[]>([]);
+
+  const refresh = async () => {
+    setEditingBook(null);
+    setResults([]);
+  };
+
+  const handleDelete = async (id: number) => {
+    try {
+      await fetch(`http://localhost:4000/books/${id}`, { method: "DELETE" });
+      refresh();
+    } catch (err) {
+      console.error("Error deleting book:", err);
+    }
+  };
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <div className="max-w-xs mx-auto flex flex-col items-center justify-center">
+      <h1 className="text-2xl font-bold text-center mt-[100px] mb-[20px]">
+        BOOK STORE
+      </h1>
+      <BookForm editingBook={editingBook} />
+      <br />
+      <BookSearch setResults={setResults} />
+      <br />
+      <BookList
+        onDelete={handleDelete}
+        onEdit={(book) => setEditingBook(book)}
+      />
+      <br />
+      {results.length > 0 && (
+        <div>
+          <h2>Search Results</h2>
+          <ul>
+            {results.map((book) => (
+              <li key={book.id}>
+                {book.title} by {book.author}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+    </div>
+  );
 }
 
-export default App
+export default App;
